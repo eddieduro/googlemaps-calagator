@@ -2,13 +2,13 @@
 exports.apiKey = "adfb6c08f301ba43007da5fb6b0c50b9";
 
 },{}],2:[function(require,module,exports){
-exports.Alarm = function(currentTime, setTime) {
-  this.currentTime = currentTime;
-  this.setTime = setTime;
+exports.Class = function(currentProperty, setProperty) {
+  this.currentProperty = currentProperty;
+  this.setProperty = setProperty;
 };
 
-exports.Alarm.prototype.triggerAlarm = function(currentTime, setTime) {
-  if (currentTime === setTime) {
+exports.Class.prototype.triggerAlarm = function(currentProperty, setProperty) {
+  if (currentProperty === setProperty) {
     return true;
   }
   else {
@@ -17,27 +17,6 @@ exports.Alarm.prototype.triggerAlarm = function(currentTime, setTime) {
 };
 
 },{}],3:[function(require,module,exports){
-exports.Temperature = function(kTemp, setTemp) {
-  this.kTemp = kTemp;
-  this.setTemp = setTemp;
-};
-
-exports.Temperature.prototype.convertTemp = function(kTemp) {
-  var c = kTemp - 273.15;
-  var f = c * 1.8 + 32;
-
-  return f.toFixed(2);
-};
-
-exports.Temperature.prototype.tempAlarm = function(kTemp, setTemp) {
-  if (kTemp >= setTemp) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-},{}],4:[function(require,module,exports){
 //! moment.js
 //! version : 2.12.0
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -3726,118 +3705,15 @@ exports.Temperature.prototype.tempAlarm = function(kTemp, setTemp) {
     return _moment;
 
 }));
-},{}],5:[function(require,module,exports){
-var Alarm = require('./../js/alarm.js').Alarm;
+},{}],4:[function(require,module,exports){
+var Class = require('./../js/class.js').Class;
 var moment = require('moment');
-var apiKey = "adfb6c08f301ba43007da5fb6b0c50b9";
-
-$(document).ready(function(){
-
-
-  $('#date').text(moment().format("dddd, MMMM Do YYYY"));
-  setInterval(function(){
-  $('#time').text(moment().format("hh:mm:ss"));
-  }, 500);
-  var timer = setInterval(function(){
-  var current_time = moment().format("HH:mm");
-
-  var set_time = $('#set_time').val();
-  var alarm = new Alarm(current_time, set_time);
-  var alarm_sound = alarm.triggerAlarm(current_time, set_time);
-
-  $('#clock').submit(function(event){
-    event.preventDefault();
-
-
-    if(!alarm_sound){
-      console.log("false");
-    } else {
-      $(".result").html("<iframe width='420' height='315' src='https://www.youtube.com/embed/pIgZ7gMze7A?rel=0&amp;autoplay=1' frameborder='0' allowfullscreen></iframe>");
-      clearInterval(timer);
-    }
-
-    $('#your_set_time').html("<h3> Your alarm is set for "+ set_time +"</h3>");
-    console.log(current_time);
-    console.log(set_time);
-    });
-    if(alarm_sound){
-      $(".result").append("<iframe width='420' height='315' src='https://www.youtube.com/embed/pIgZ7gMze7A?rel=0&amp;autoplay=1' frameborder='0' allowfullscreen></iframe>");
-      clearInterval(timer);
-    }
-    }, 500);
-  });
-
-var Temperature = require('./../js/temperature.js').Temperature;
 var apiKey = require('./../.env').apiKey;
 
 $(document).ready(function(){
-  var tempArr = [];
-  $.get('http://api.openweathermap.org/data/2.5/weather?q=Portland,OR' + '&appid=' + apiKey).then(function(response) {
-    var kTemp = response.main.temp;
-    var newTemp = new Temperature(kTemp);
-    var fahr = newTemp.convertTemp(kTemp);
-    var humidity = response.main.humidity;
-    var wind = response.wind.speed;
-
-
-    $('.showWeather').text("The humidity in portland  is " + humidity + "%, the temperature is " + fahr + " degrees, and the wind speed is " + wind +".");
-
-    if(humidity > 80 || wind > 3) {
-      $('.weatherPic').append("<p><img src='../images/cloud.svg' class='icon'></p> <p><img src='../images/weather.svg' class='icon'></p>")
-    }
 
 
 
-    $('#temp').submit(function(event){
-      event.preventDefault();
-      var set_temp = $('#set_temp').val();
-      var alarm_temp = newTemp.tempAlarm(fahr, set_temp);
-      $('#your_set_temp').html("<h3> Your temperature alarm is set for "+ set_temp +" degrees.</h3>");
-        if(alarm_temp) {
-          $(".temp_result").html("<iframe width='420' height='315' src='https://www.youtube.com/embed/GeZZr_p6vB8?rel=0&amp;autoplay=1' frameborder='0' allowfullscreen></iframe>");
-        } else {
-          tempArr.unshift(set_temp);
-        }
-
-    });
-  }).fail(function(error){
-    $('.showWeather').text(error.responseJSON.message);
   });
 
-  $('form#search').submit(function(event){
-    event.preventDefault();
-    var city = $('#city').val();
-
-    $.get('http://api.openweathermap.org/data/2.5/weather?q='+ city + '&appid=' + apiKey).then(function(response) {
-      var kTemp = response.main.temp;
-      var newTemp = new Temperature(kTemp);
-      var fahr = newTemp.convertTemp(kTemp);
-      var humidity = response.main.humidity;
-      var wind = response.wind.speed;
-
-
-      $('.showWeather').text("The humidity in " + city + " is " + humidity + "%, the temperature is " + fahr + " degrees, and the wind speed is " + wind +".");
-
-      if(humidity > 40 || wind > 3) {
-        $('.weatherPic').html("<p><img src='../images/cloud.svg' class='icon'></p> <p><img src='../images/weather.svg' class='icon'></p>")
-      } else {
-        $('.weatherPic').html("<p><img src='../images/summer.svg' class='icon'></p>");
-      }
-
-      var set_temp = tempArr[0];
-
-      var alarm_temp = newTemp.tempAlarm(fahr, set_temp);
-      $('#your_set_temp').html("<h3> Your temperature alarm is set for "+ set_temp +" degrees.</h3>");
-      if(alarm_temp) {
-        $(".temp_result").html("<iframe width='420' height='315' src='https://www.youtube.com/embed/GeZZr_p6vB8?rel=0&amp;autoplay=1' frameborder='0' allowfullscreen></iframe>");
-      } else {
-        $(".temp_result").html("<iframe width='420' height='315' src='https://www.youtube.com/embed/OkYSt9AOwhM?rel=0&amp;autoplay=1' frameborder='0' allowfullscreen></iframe>");
-      }
-
-    }).fail(function(error){
-      $('.showWeather').text(error.responseJSON.message);
-    });
-  });
-});
-
-},{"./../.env":1,"./../js/alarm.js":2,"./../js/temperature.js":3,"moment":4}]},{},[5]);
+},{"./../.env":1,"./../js/class.js":2,"moment":3}]},{},[4]);

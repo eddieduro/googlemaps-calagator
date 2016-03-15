@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
-var Alarm = require('./../js/alarm.js').Alarm;
-var Temperature = require('./../js/temperature.js').Temperature;
+var Class = require('./../js/class.js').Class;
+
 
 describe("Alarm", function() {
   it("will return the current time", function() {
