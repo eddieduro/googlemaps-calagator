@@ -28,10 +28,11 @@ $font-family-default: walsheim;
   }
 
   #hero{
-    background: url('../../images/morrison.jpg') center no-repeat;
+    background: url('../../images/pdx.jpg') center no-repeat;
     background-size: cover;
     height: 650px;
     width: 100%;
+    max-width: 4300px;
   }
 }
 
