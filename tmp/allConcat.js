@@ -18,7 +18,7 @@ $( document ).ready(function() {
     type: "GET",
     dataType: 'JSONP',
     crossDomain: true,
-    url: "https://api.meetup.com/find/groups?callback=?&key=" + meetUpApiKey +"&photo-host=public&lon=" + longitude + "&text=web development&lat=" + latitude + "&page=20&sign=true"
+    url: "https://api.meetup.com/find/groups?callback=?&key=" + meetUpApiKey +"&photo-host=public&lon=" + longitude + "&text=web development&lat=" + latitude + "&page=80&sign=true"
     }).then(function (response) {
       $.each(response, function (i, items) {
         var markers = defaultPosition(items);
@@ -49,29 +49,28 @@ function defaultPosition(arr = []) {
     var description = arr[i].description;
     var link = arr[i].link;
     var next_event = arr[i].next_event;
-
     if( next_event !== undefined){
       var id = next_event.id;
+    }
+    var group_photo = arr[i].group_photo;
+    if( group_photo ){
+      var thumb_link = group_photo.thumb_link;
+      console.log(thumb_link)
     }
     marker = new google.maps.Marker({
       map: mapObject,
       position: meetUpLatLong,
     });
-
     infowindow = new google.maps.InfoWindow({
-      content: description
+      content: "<img id='thumb_nail_img' src='" + thumb_link + "'><h2>"+ name + "</h2><br/><a href='" + link + "'>" + link + "</a><br/>" + description
     });
-
     marker.addListener('click', function() {
       infowindow.open(mapObject, marker);
     });
-
     var contentString = description;
     markerArray.push(marker);
     infoArray.push(infowindow);
   }
-
-
   console.log(contentArray);
   infoArray.forEach(function(info){
     contentArray.push(info.content);
@@ -81,7 +80,5 @@ function defaultPosition(arr = []) {
       infowindow.setContent(contentArray[i]);
       infowindow.open(mapObject, marker);
     });
-
   });
-
 }
