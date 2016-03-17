@@ -29,20 +29,19 @@ $( document ).ready(function() {
             dataType: 'JSONP',
             crossDomain: true,
             url: "https://api.meetup.com/2/events?&key="+ meetUpApiKey +"&sign=true&photo-host=public&event_id="+ eventId +"&page=20"
-          }).then(function (j, data) {
-            console.log(j, data);
+          }).then(function (data) {
+            console.log(data);
           });
         }
         });
+
+        // markers.forEach(function(marker){
+        //   addInfoWindow(marker);
+        // });
+
     });
   });
 });
-
-var Class = require('./../js/class.js').Class;
-var apiKey = require('./../.env').apiKey;
-var meetUpApiKey = require('./../.env').meetUpApiKey;
-var serverKey = require('./../.env').serverKey;
-
 
 function defaultPosition(arr = []) {
   var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="

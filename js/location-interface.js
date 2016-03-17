@@ -1,33 +1,19 @@
 var Class = require('./../js/class.js').Class;
 var apiKey = require('./../.env').apiKey;
 var meetUpApiKey = require('./../.env').meetUpApiKey;
+var serverKey = require('./../.env').serverKey;
 
-$( document ).ready(function() {
-  defaultPosition();
-  markersArray = [];
-    var latitude = 45.5189614;
-    var longitude = -122.6865243;
-    $.ajax({
-    type: "GET",
-    dataType: 'JSONP',
-    crossDomain: true,
-    url: "https://api.meetup.com/find/groups?callback=?&key=" + meetUpApiKey +"&photo-host=public&lon=" + longitude + "&text=web development&lat=" + latitude + "&page=80&sign=true"
-    }).then(function (response) {
-      $.each(response, function (i, items) {
-        var markers = defaultPosition(items);
-        // markers.forEach(function(marker){
-        //   addInfoWindow(marker);
-        // });
-    });
-
-  });
-});
 
 function defaultPosition(arr = []) {
+  var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="
+
+  // https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
   var userLatLng = new google.maps.LatLng(45.5189614, -122.6865243);
   var markerArray = [];
   var infoArray = [];
+  var addressArray = [];
   var contentArray = [];
+  var latlongArray = [];
   var marker = "";
   var infowindow = "";
   var myOptions = {
@@ -37,19 +23,23 @@ function defaultPosition(arr = []) {
   };
   var mapObject = new google.maps.Map(document.getElementById("map"), myOptions);
   for(i = 0; i < arr.length; i++){
+    // console.log(arr[i])
+    var newUrl = url + arr[i].lat + ', ' + arr[i].lon + "&key=" + serverKey;
     var meetUpLatLong = new google.maps.LatLng(arr[i].lat, arr[i].lon);
     var name = arr[i].name;
     var description = arr[i].description;
     var link = arr[i].link;
     var next_event = arr[i].next_event;
-    if( next_event !== undefined){
-      var id = next_event.id;
-    }
+    // if( next_event !== undefined){
+    //   var id = next_event.id;
+    //   // $.get("https://api.meetup.com/2/events?&sign=true&photo-host=public&event_id="+ id +"&page=20")
+    // }
     var group_photo = arr[i].group_photo;
     if( group_photo ){
       var thumb_link = group_photo.thumb_link;
-      console.log(thumb_link)
+      // console.log(thumb_link)
     }
+    // console.log(arr[i]);
     marker = new google.maps.Marker({
       map: mapObject,
       position: meetUpLatLong,
@@ -63,14 +53,22 @@ function defaultPosition(arr = []) {
     var contentString = description;
     markerArray.push(marker);
     infoArray.push(infowindow);
+    latlongArray.push(newUrl)
   }
-  console.log(contentArray);
+  // console.log(latlongArray);
   infoArray.forEach(function(info){
     contentArray.push(info.content);
   });
   markerArray.forEach(function(marker, i){
     marker.addListener('click', function() {
-      infowindow.setContent(contentArray[i]);
+      $.get(latlongArray[i], function(response){
+        var address = response.results[0].formatted_address;
+
+        addressArray.unshift(address);
+      });
+      // console.log(addressArray[0]);
+
+      infowindow.setContent(contentArray[i] + "<br/>" +addressArray[0]);
       infowindow.open(mapObject, marker);
     });
   });

@@ -67,6 +67,7 @@ gulp.task('bower', ['bowerJS', "bowerCSS"]);
 
 gulp.task('cssBuild', function() {
   return gulp.src('scss/*.scss')
+  .pipe(sass({require: ['susy']}))
   .pipe(sourcemaps.init())
   .pipe(sass())
   .pipe(sourcemaps.write())

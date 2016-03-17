@@ -1,18 +1,35 @@
+@import "../bower_components/susy/sass/_susy.scss";
+
+
 $light_color: #7ea3c9;
 
-body{
-  .icon{
-    height: 100px;
-    float: right;
-    margin-top: -80px;
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 50px;
-  }
+//Susy Maps
+  $susy: (
+    columns: 12,
+    gutters: 1/2,
+    math: fluid,
+    gutter-position: outside,
+  );
+
+  body{
+
+    // font-family: $font-family-default;
+    // font-size:$font-size-default;
+    // line-height:$line-height;
+    // color:$color-text;
+    // background-color: $color-background;
+
+    margin:0;
+    padding:0;
+
+    overflow-x:hidden;
+
 
   #map {
     height: 600px;
-    width: 850px;
+    max-height: auto;
+    width: 100%;
+    max-width: auto;
   }
 }
 
