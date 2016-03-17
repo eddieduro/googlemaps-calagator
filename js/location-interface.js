@@ -27,7 +27,7 @@ function defaultPosition(arr = []) {
   var userLatLng = new google.maps.LatLng(45.5189614, -122.6865243);
   var markerArray = [];
   var infoArray = [];
-  var contentArray = {};
+  var contentArray = [];
   var marker = "";
   var infowindow = "";
   var myOptions = {
@@ -59,26 +59,22 @@ function defaultPosition(arr = []) {
       infowindow.open(mapObject, marker);
     });
 
-
     var contentString = description;
     markerArray.push(marker);
-    contentArray = {'marker': marker, 'content': infowindow.content}
-    // infoArray.push(infowindow);
+    infoArray.push(infowindow);
   }
+
+
   console.log(contentArray);
-  // infoArray.forEach(function(info){
-  //   contentArray.push(info.content);
-  // });
-  markerArray.forEach(function(marker){
-    // for(i = markerArray.length; i < contentArray.length; i++){
-    //   infowindow = new google.maps.InfoWindow({
-    //     content: contentArray[i]
-    //   });
-    //   console.log(infowindow);
-    // }
+  infoArray.forEach(function(info){
+    contentArray.push(info.content);
+  });
+  markerArray.forEach(function(marker, i){
     marker.addListener('click', function() {
+      infowindow.setContent(contentArray[i]);
       infowindow.open(mapObject, marker);
     });
+
   });
 
 }
