@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="build/css/vendor.css">
     <link rel="stylesheet" href="build/css/style.css">
       <script src="build/js/vendor.min.js"></script>
@@ -13,11 +14,14 @@
   <body>
     <nav class="navbar">
       <div class="container">
-        <img src="circle.svg" alt="" /></img>
+        <img src="circle.svg" alt="logo" />
+        <span class="text-center"><h4>&lt;ul&gt;</h4></span>
+        </img>
+
         <h1>Upprleft.io</h1>
         <ul class="nav">
-          <li class="pull-right"><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+          <!-- <li class="pull-right"><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li> -->
         </ul>
       </div>
     </nav>
@@ -31,6 +35,9 @@
             <hr>
             <div>
               <ul id="current"></ul>
+              <div id="left-triangle">
+                <svg height="875" width="659"> <polygon points="0 87.5,0 787.5,329.5 437.5" style="fill:#E7E4D9"></polygon>Sorry, your browser does not support inline SVG.</svg>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
@@ -38,11 +45,12 @@
           </div>
         </div>
     </section>
-    <div id="left-triangle">
-      <svg height="875" width="659" style="position:absolute;z-index:0; left:0px; top:4375px"> <polygon points="0 87.5,0 787.5,329.5 437.5" style="fill:#E7E4D9"></polygon>Sorry, your browser does not support inline SVG.</svg>
+  <footer>
+    <div id="footer_nav">
+      <a href="#"><i class="fa fa-facebook"></i></a>
+      <a href="#"><i class="fa fa-twitter"></i></a>
+      <a href="#"><i class="fa fa-instagram"></i></a>
     </div>
-    <div id="right-triangle">
-      <svg height="875" width="659"> <polygon points="659 87.5,659 787.5,329.5 602.25" style="fill: rgb(237, 237, 237);" class="animate-shape"></polygon>Sorry, your browser does not support inline SVG.</svg>
-    </div>
+  </footer>
  </body>
 </html>

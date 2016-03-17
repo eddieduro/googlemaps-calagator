@@ -3,8 +3,14 @@ var apiKey = require('./../.env').apiKey;
 var meetUpApiKey = require('./../.env').meetUpApiKey;
 var serverKey = require('./../.env').serverKey;
 
+$(document).ajaxStart(function(){
+    $(".loader").css("display", "block");
+});
+
+
 
 $( document ).ready(function() {
+  $('#loading-image').show();
   defaultPosition();
   markersArray = [];
   eventArray = [];
@@ -14,10 +20,10 @@ $( document ).ready(function() {
     type: "GET",
     dataType: 'JSONP',
     crossDomain: true,
-    url: "https://api.meetup.com/find/groups?callback=?&key=" + meetUpApiKey +"&photo-host=public&lon=" + longitude + "&text=web development&lat=" + latitude + "&page=2&sign=true"
+    url: "https://api.meetup.com/find/groups?callback=?&key=" + meetUpApiKey +"&photo-host=public&lon=" + longitude + "&text=web development&lat=" + latitude + "&page=8&sign=true"
     }).then(function (response) {
       $.each(response, function (i, items) {
-        // console.log(i, items)
+        console.log(i, items)
         var markers = defaultPosition(items);
         $.each(items, function(j, item) {
           // console.log(item);
@@ -28,7 +34,7 @@ $( document ).ready(function() {
             type: "GET",
             dataType: 'JSONP',
             crossDomain: true,
-            url: "https://api.meetup.com/2/events?&key="+ meetUpApiKey +"&sign=true&photo-host=public&event_id="+ eventId +"&page=2"
+            url: "https://api.meetup.com/2/events?&key="+ meetUpApiKey +"&sign=true&photo-host=public&event_id="+ eventId +"&page=8"
           }).then(function (data) {
             var event_url = data.results[0].event_url;
             var eventName = data.results[0].name;
@@ -38,14 +44,14 @@ $( document ).ready(function() {
             var eventLat = data.results[0].venue.lat;
             var eventLon = data.results[0].venue.lon;
             console.log(data);
-            // $.each(data, function(k, log) {
-            //   var eventAddress =
-            //   console.log(log);
-            // })
             $("#current").append("<h4>"+ eventName + "</h4><p>" + eventAddress + " " + eventCity + ", " + eventState + "<li><a target='_blank' href='"+ event_url +"'>" + event_url + "</li>");
           });
         }
         });
     });
   });
+});
+
+$(document).ajaxComplete(function(){
+    $(".loader").css("display", "none");
 });
