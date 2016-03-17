@@ -1,8 +1,11 @@
 @import "../bower_components/susy/sass/_susy.scss";
-
-
+@font-face {
+    font-family: 'walsheim'; /*a name to be used later*/
+    src: url('/fonts/GT-Walsheim-Pro-Trial-Medium.otf'); /*URL to font*/
+}
+// Variables
 $light_color: #7ea3c9;
-
+$font-family-default: walsheim;
 //Susy Maps
   $susy: (
     columns: 12,
@@ -12,18 +15,10 @@ $light_color: #7ea3c9;
   );
 
   body{
-
-    // font-family: $font-family-default;
-    // font-size:$font-size-default;
-    // line-height:$line-height;
-    // color:$color-text;
-    // background-color: $color-background;
-
-    margin:0;
-    padding:0;
-
-    overflow-x:hidden;
-
+  font-family: $font-family-default;
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
 
   #map {
     height: 600px;
@@ -31,8 +26,26 @@ $light_color: #7ea3c9;
     width: 100%;
     max-width: auto;
   }
+
+  #hero{
+    background: url('../../images/morrison.jpg') center no-repeat;
+    background-size: cover;
+    height: 600px;
+    width: 100%;
+  }
 }
 
+nav{
+  img{
+    margin-left: 40%;
+    margin-right: 50%;
+    margin-bottom: -50px;
+  }
+  h1 {
+    font-size: 4em;
+    text-align: center;
+  }
+}
 #thumb_nail_img {
   width: 100px;
   height: auto;
