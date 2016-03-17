@@ -90,4 +90,10 @@ div{
     font-size: 50pt;
     padding: 25px;
   }
+  a{
+    color: white;
+    :hover{
+      color: black;
+    }
+  }
 }
