@@ -87,6 +87,9 @@ div{
   background-color: #DABB85;
   padding-top: 25px;
   text-align: center;
+  p{
+    margin: 0;
+  }
   .fa {
     font-size: 50pt;
     padding: 25px;
@@ -96,5 +99,10 @@ div{
     :hover{
       color: black;
     }
+  }
+  #heart{
+    color: red;
+    font-size: 20px;
+    padding: 0;
   }
 }
