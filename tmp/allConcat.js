@@ -23,12 +23,14 @@ $( document ).ready(function() {
     url: "https://api.meetup.com/find/groups?callback=?&key=" + meetUpApiKey +"&photo-host=public&lon=" + longitude + "&text=web development&lat=" + latitude + "&page=8&sign=true"
     }).then(function (response) {
       $.each(response, function (i, items) {
-        console.log(i, items)
+        // console.log(i, items)
         var markers = defaultPosition(items);
         $.each(items, function(j, item) {
-          // console.log(item);
+          // console.log(item.next_event);
           var nextEvent = item.next_event;
+          // var eventTime = item.next_event.time;
           if( nextEvent ){
+            console.log(item.next_event.time);
             var eventId = item.next_event.id;
             $.ajax({
             type: "GET",
@@ -43,8 +45,8 @@ $( document ).ready(function() {
             var eventState = data.results[0].venue.state;
             var eventLat = data.results[0].venue.lat;
             var eventLon = data.results[0].venue.lon;
-            console.log(data);
-            $("#current").append("<h4>"+ eventName + "</h4><p>" + eventAddress + " " + eventCity + ", " + eventState + "<li><a target='_blank' href='"+ event_url +"'>" + event_url + "</li>");
+            // console.log(data);
+            $("#current").append("<h4>"+ eventName + "</h4><p> "+  +" </p><br/><p>" + eventAddress + " " +  eventCity + ", " + eventState + "<li><a target='_blank' href='"+ event_url +"'>" + event_url + "</li>");
           });
         }
         });
