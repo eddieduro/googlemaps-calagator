@@ -1,4 +1,3 @@
-@import "../bower_components/susy/sass/_susy.scss";
 @font-face {
     font-family: 'walsheim'; /*a name to be used later*/
     src: url('/fonts/GT-Walsheim-Pro-Trial-Medium.otf'); /*URL to font*/
@@ -6,14 +5,13 @@
 // Variables
 $light_color: #7ea3c9;
 $font-family-default: walsheim;
-//Susy Maps
-  $susy: (
-    columns: 12,
-    gutters: 1/2,
-    math: fluid,
-    gutter-position: outside,
-  );
 
+// breakpoints
+$xs: 320px;
+$sm: 425px;
+$medium: 767px;
+$tablet: 768px;
+$desktop: 1024px;
   body{
   font-family: $font-family-default;
   margin:0;
@@ -38,10 +36,16 @@ $font-family-default: walsheim;
 
 nav{
   img{
-    margin: 10px;
-    margin-left: 40%;
-    margin-right: 50%;
-    margin-bottom: -50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -130px;
+  }
+  span{
+    h4{
+      font-family: 'Roboto';
+      margin-left: 25px;
+    }
   }
   h1 {
     font-size: 4em;
@@ -80,6 +84,9 @@ div{
   margin-left: -30px;
   z-index: -1;
   position: absolute;
+  @media(min-width: $xs) and (max-width: $sm){
+    margin-top: -1000px;
+  }
 }
 
 #footer_nav {
